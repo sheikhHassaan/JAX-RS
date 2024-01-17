@@ -7,6 +7,9 @@ public class Queries {
     public static final String DOES_CATEGORY_EXIST = "SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_CATEGORY WHERE CATEGORY_NAME = ?";
     public static final String DOES_LOCATION_EXIST = "SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_LOCATION WHERE LOCATION_NAME = ?";
 
+    public static final String DOES_CATEGORY_ID_EXIST = "SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_CATEGORY WHERE ID = ?";
+    public static final String DOES_LOCATION_ID_EXIST = "SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_LOCATION WHERE ID = ?";
+
 
     public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM INVENTORY.ITEM_CATEGORY WHERE CATEGORY_NAME = ?";
     public static final String GET_LOCATION_BY_NAME = "SELECT * FROM INVENTORY.ITEM_LOCATION WHERE LOCATION_NAME = ?";
@@ -58,25 +61,11 @@ public class Queries {
     public static final String INSERT_INVENTORY =
             "INSERT INTO INVENTORY.INVENTORY (ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_LOCATION_ID) VALUES (?, ?, ?, ?, ?);";
 
-    public static final String UPDATE_BY_ID =
-            "START TRANSACTION;" +
-                    "UPDATE INVENTORY.ITEM_LOCATION " +
-                    "SET NAME = ? " +
-                    "WHERE ID = ?;" +
-
-                    "UPDATE INVENTORY.ITEM_CATEGORY " +
-                    "SET NAME = ? " +
-                    "WHERE ID = ?;" +
-
-                    "UPDATE INVENTORY.INVENTORY " +
-                    "SET ITEM_NAME = ?, " +
-                    "ITEM_QUANTITY = ?, " +
-                    "ITEM_CATEGORY_ID = ?, " +
-                    "ITEM_LOCATION_ID = ? " +
-                    "WHERE ID = ?;" +
-
-                    "COMMIT;";
-    public static final String DELETE_BY_ID =
-            "";
-
+    public static final String UPDATE_LOCATION = "UPDATE INVENTORY.ITEM_LOCATION SET LOCATION_NAME = ? WHERE ID = ?;";
+    public static final String UPDATE_CATEGORY = "UPDATE INVENTORY.ITEM_CATEGORY SET CATEGORY_NAME = ? WHERE ID = ?;";
+    public static final String UPDATE_INVENTORY = "UPDATE INVENTORY.INVENTORY " +
+            "SET ITEM_NAME = ?, ITEM_QUANTITY = ?, ITEM_CATEGORY_ID = ?, ITEM_LOCATION_ID = ? WHERE ID = ?;";
+    public static final String DELETE_LOCATION = "DELETE FROM INVENTORY.ITEM_LOCATION WHERE ID = ?";
+    public static final String DELETE_CATEGORY = "DELETE FROM INVENTORY.ITEM_CATEGORY WHERE ID = ?";
+    public static final String DELETE_INVENTORY = "DELETE FROM INVENTORY.INVENTORY WHERE ID = ?";
 }
