@@ -21,7 +21,7 @@ public class InventoryResources extends Queries {
         return "Inside inventory resources!";
     }
 
-    /*
+
     // note: 1. Fetch By ID, http://localhost:8080/inventory/{inventory_id}/ (HTTP GET)
 
     //Sample response JSON: {"id":1,"item_name":"iPhone 13","item_quantity":10,"item_category":
@@ -31,7 +31,7 @@ public class InventoryResources extends Queries {
     @Path("/{inventory_id}")
     @Produces("text/plain")
     public Response fetchByID(@PathParam("inventory_id") Integer inventory_id){
-
+        // note: Have to return "Inventory", no payload.
         return ;
     }
 
@@ -42,30 +42,31 @@ public class InventoryResources extends Queries {
     @Produces("text/plain")
     public Response FetchAll(){
 
+        // note: Have to return "ArrayList<Inventory>", no payload.
         return ;
     }
 
-    // note: Fetch All By Category, http://localhost:8080/inventory/listByCategory?category=22 (HTTP GET)
+    // note: 3. Fetch All By Category, http://localhost:8080/inventory/listByCategory?category=22 (HTTP GET)
 
     @GET
     @Path("/listByCategory")
     @Produces("text/plain")
     public Response fetchAllByCategory(@QueryParam("category") Integer category_id){
-
+        // note: Have to return "ArrayList<Inventory>", no payload.
         return ;
     }
 
-    // note: Fetch All By Location, http://localhost:8080/inventory/list?location=7 (HTTP GET)
+    // note: 4. Fetch All By Location, http://localhost:8080/inventory/list?location=7 (HTTP GET)
 
     @GET
     @Path("/list")
     @Produces("text/plain")
     public Response fetchAllByLocation(@QueryParam("location") Integer location_id){
-
+        // note: Have to return "ArrayList<Inventory>", no payload.
         return ;
     }
 
-    // note: Fetch All By Location And Category, http://localhost:8080/inventory/list?location=7&category=22 (HTTP GET)
+    // note: 5. Fetch All By Location And Category, http://localhost:8080/inventory/list?location=7&category=22 (HTTP GET)
 
     //Sample response JSON: [{"id":1,"item_name":"iPhone 13","item_quantity":10,"item_category":
     //{"id":24,"category_name":"Phone"},"item_location":{"id":7,"location_name":"Phoenix"}},
@@ -80,11 +81,11 @@ public class InventoryResources extends Queries {
     @Path("/list")
     @Produces("text/plain")
     public Response fetchAllByLocationAndCategory(@QueryParam("location") Integer location_id, @QueryParam("category") Integer category_id){
-
+        // note: Have to return "ArrayList<Inventory>", no payload.
         return ;
     }
 
-    // note: Add New Inventory Item, http://localhost:8080/inventory/add (HTTP POST)
+    // note: 6. Add New Inventory Item, http://localhost:8080/inventory/add (HTTP POST)
 
     //Sample Payload:  {"item_name":"iPhone 12","item_quantity":10,"item_category":
     //{"id":24,"category_name":"Phone"},"item_location":{"id":7,"location_name":"Phoenix"}}
@@ -96,12 +97,13 @@ public class InventoryResources extends Queries {
     @Path("/add")
     @Produces("text/plain")
     public Response addNew(String inventoryJson){
-
+        // note: Inventory-Json received as payload. Have to parse it and run the add-function on it.
+        //  Have to return "Inventory" in response.
         return ;
     }
 
 
-    // note: Update Existing Inventory Item By Id, http://localhost:8080/inventory/{inventory_id}/ (HTTP PUT)
+    // note: 7. Update Existing Inventory Item By Id, http://localhost:8080/inventory/{inventory_id}/ (HTTP PUT)
 
     //Sample Payload:  {"item_name":"iPhone 12","item_quantity":15,"item_category":
     //{"id":24,"category_name":"Phone"},"item_location":{"id":7,"location_name":"Phoenix"}}
@@ -113,11 +115,12 @@ public class InventoryResources extends Queries {
     @Path("/{inventory_id}")
     @Produces("text/plain")
     public Response updateByID(@PathParam("inventory_id") Integer inventory_id, String inventoryJson){
-
+        // note: Inventory-Json received as payload. Have to parse it and run the update-function on it.
+        //  Have to return "Inventory" in response.
         return ;
     }
 
-    // note: Delete Existing Inventory Item By Id, http://localhost:8080/inventory/{inventory_id}/ (HTTP DELETE)
+    // note: 8. Delete Existing Inventory Item By Id, http://localhost:8080/inventory/{inventory_id}/ (HTTP DELETE)
 
     //Sample Payload: NA
 
@@ -127,18 +130,7 @@ public class InventoryResources extends Queries {
     @Path("/{inventory_id}")
     @Produces("text/plain")
     public Response delete(@PathParam("inventory_id") Integer inventory_id){
-
+        // note: Have to run delete-function on the inventory_id & return "Message" in response. No payload.
         return ;
     }
-
-    */
-    @POST
-    @Path("/add")
-    @Produces("text/plain")
-    public Response addNew(String inventoryJson){
-
-        String
-        return ;
-    }
-
 }

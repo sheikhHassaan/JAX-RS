@@ -34,6 +34,7 @@ public class InventoryServiceImpl implements InventoryService{
         return inventoryService;
     }
 
+//  note: Dependency functionalities ↓
     @Override
     public boolean doesInventoryExist(UUID uuid) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
 
@@ -55,7 +56,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public boolean doesCategoryExist(UUID cat_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -76,7 +76,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public UUID doesCategoryExist(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -101,7 +100,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public boolean doesLocationExist(UUID loc_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -122,7 +120,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public UUID doesLocationExist(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -147,7 +144,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public UUID getCategoryIdByName(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -172,7 +168,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public UUID getLocationIdByName(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
@@ -194,27 +189,187 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
-    /*
-    public Inventory extractValues(ResultSet resultSet) throws SQLException {
-        Inventory inventory = new Inventory();
+    @Override
+    public Category addCategory(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         Category category = new Category();
-        Location location = new Location();
+        UUID cat_id = doesCategoryExist(cat_name);
+        if(cat_id == null){   //!doesCategoryExist(cat_name)
+            UUID id = UUID.randomUUID();
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CATEGORY);
+                preparedStatement.setString(1, String.valueOf(id));
+                preparedStatement.setString(2, cat_name);
+                int rowsEffected = preparedStatement.executeUpdate();
+                if (rowsEffected > 0){
+                    category.setCategory_id(id);
+                    category.setCategory_name(cat_name);
+                }
+                return category;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            }
+        } else {
+            category.setCategory_id(cat_id);
+            category.setCategory_name(cat_name);
+            return category;
 
-        inventory.setId(UUID.fromString(resultSet.getString(1)));
-        inventory.setItem_name(resultSet.getString(2));
-        inventory.setItem_quantity(resultSet.getInt(3));
-        category.setCategory_id(UUID.fromString(resultSet.getString(4)));
-        category.setCategory_name(resultSet.getString(5));
-        location.setLocation_id(UUID.fromString(resultSet.getString(6)));
-        location.setLocation_name(resultSet.getString(7));
-        inventory.setItem_category(category);
-        inventory.setItem_location(location);
 
-        return inventory;
+            /*
+            ResultSet resultSet = null;
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_BY_NAME);
+                preparedStatement.setString(1, cat_name);
+                resultSet = preparedStatement.executeQuery();
+
+                resultSet.next();
+                category.setCategory_id(UUID.fromString(resultSet.getString(1)));
+                category.setCategory_name(resultSet.getString(2));
+
+                return category;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+                if (resultSet != null && !resultSet.isClosed()){
+                    resultSet.close();
+                }
+            }
+             */
+        }
     }
-     */  // extra: Extract values function
+    @Override
+    public Location addLocation(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        Location location = new Location();
+        UUID loc_id = doesLocationExist(loc_name);
+        if(loc_id == null){   // !doesLocationExist(loc_name)
+            UUID id = UUID.randomUUID();
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_LOCATION);
+                preparedStatement.setString(1, String.valueOf(id));
+                preparedStatement.setString(2, loc_name);
+                int rowsEffected = preparedStatement.executeUpdate();
+                if (rowsEffected > 0){
+                    location.setLocation_id(id);
+                    location.setLocation_name(loc_name);
+                }
+                return location;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            }
+        } else {
 
+            location.setLocation_id(loc_id);
+            location.setLocation_name(loc_name);
+            return location;
+
+
+            /*
+            ResultSet resultSet = null;
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_BY_NAME);
+                preparedStatement.setString(1, loc_name);
+                resultSet = preparedStatement.executeQuery();
+
+                resultSet.next();
+                location.setLocation_id(UUID.fromString(resultSet.getString(1)));
+                location.setLocation_name(resultSet.getString(2));
+
+                return location;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+                if (resultSet != null && !resultSet.isClosed()){
+                    resultSet.close();
+                }
+            }
+
+             */
+        }
+    }
+    @Override
+    public boolean updateCategory(Category category) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        UUID cat_id = doesCategoryExist(category.getCategory_name());
+        if (cat_id != null) {
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY);
+                preparedStatement.setString(1, category.getCategory_name());
+                preparedStatement.setString(2, String.valueOf(category.getCategory_id()));
+                int rowsEffected = preparedStatement.executeUpdate();
+                return rowsEffected > 0;
+            } finally {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            }
+        } else {
+            return false;   // NOTE: The record doesn't exist.
+        }
+    }
+    @Override
+    public boolean updateLocation(Location location) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        UUID loc_id = doesLocationExist(location.getLocation_name());
+        if (loc_id != null) {
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION);
+                preparedStatement.setString(1, location.getLocation_name());
+                preparedStatement.setString(2, String.valueOf(location.getLocation_id()));
+                int rowsEffected = preparedStatement.executeUpdate();
+                return rowsEffected > 0;
+            } finally {
+                if (connection != null && !connection.isClosed()) {
+                    connection.close();
+                }
+            }
+        } else {
+            return false;   // NOTE: The record doesn't exist.
+        }
+    }
+    @Override
+    public boolean deleteCategory(UUID cat_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        if(doesCategoryExist(cat_id)){
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORY);
+                preparedStatement.setString(1, String.valueOf(cat_id));
+                int rowsEffected = preparedStatement.executeUpdate();
+                return rowsEffected > 0;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            }
+        } else { return false; } // NOTE: This category doesn't exist.
+    }
+    @Override
+    public boolean deleteLocation(UUID loc_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        if(doesCategoryExist(loc_id)){
+            try {
+                connection = HikariConnection.getPooledConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LOCATION);
+                preparedStatement.setString(1, String.valueOf(loc_id));
+                int rowsEffected = preparedStatement.executeUpdate();
+                return rowsEffected > 0;
+            } finally {
+                if (connection != null && !connection.isClosed()){
+                    connection.close();
+                }
+            }
+        } else { return false; } // NOTE: This location doesn't exist.
+    }
+
+
+//  note: Core functionalities ↓
     @Override
     public ArrayList<Inventory> fetchAll() throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
 
@@ -339,7 +494,6 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
-
     @Override
     public Inventory addInventory(Inventory inv) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
 
@@ -375,7 +529,6 @@ public class InventoryServiceImpl implements InventoryService{
         }
         return inventory;
     }
-
     @Override
     public Inventory updateInventory(Inventory inv) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         Inventory inventory = null;
@@ -407,7 +560,6 @@ public class InventoryServiceImpl implements InventoryService{
         }
         return inventory;
     }
-
     @Override
     public boolean delete(UUID inventory_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         // note: no cascade delete.
@@ -425,189 +577,5 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
         else { return false; }   // NOTE: This inventory doesn't exist.
-    }
-
-    @Override
-    public Category addCategory(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        Category category = new Category();
-        UUID cat_id = doesCategoryExist(cat_name);
-        if(cat_id == null){   //!doesCategoryExist(cat_name)
-            UUID id = UUID.randomUUID();
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CATEGORY);
-                preparedStatement.setString(1, String.valueOf(id));
-                preparedStatement.setString(2, cat_name);
-                int rowsEffected = preparedStatement.executeUpdate();
-                if (rowsEffected > 0){
-                    category.setCategory_id(id);
-                    category.setCategory_name(cat_name);
-                }
-                return category;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-            }
-        } else {
-            category.setCategory_id(cat_id);
-            category.setCategory_name(cat_name);
-            return category;
-
-
-            /*
-            ResultSet resultSet = null;
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_BY_NAME);
-                preparedStatement.setString(1, cat_name);
-                resultSet = preparedStatement.executeQuery();
-
-                resultSet.next();
-                category.setCategory_id(UUID.fromString(resultSet.getString(1)));
-                category.setCategory_name(resultSet.getString(2));
-
-                return category;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-                if (resultSet != null && !resultSet.isClosed()){
-                    resultSet.close();
-                }
-            }
-             */
-        }
-    }
-
-    @Override
-    public Location addLocation(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        Location location = new Location();
-        UUID loc_id = doesLocationExist(loc_name);
-        if(loc_id == null){   // !doesLocationExist(loc_name)
-            UUID id = UUID.randomUUID();
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_LOCATION);
-                preparedStatement.setString(1, String.valueOf(id));
-                preparedStatement.setString(2, loc_name);
-                int rowsEffected = preparedStatement.executeUpdate();
-                if (rowsEffected > 0){
-                    location.setLocation_id(id);
-                    location.setLocation_name(loc_name);
-                }
-                return location;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-            }
-        } else {
-
-            location.setLocation_id(loc_id);
-            location.setLocation_name(loc_name);
-            return location;
-
-
-            /*
-            ResultSet resultSet = null;
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_BY_NAME);
-                preparedStatement.setString(1, loc_name);
-                resultSet = preparedStatement.executeQuery();
-
-                resultSet.next();
-                location.setLocation_id(UUID.fromString(resultSet.getString(1)));
-                location.setLocation_name(resultSet.getString(2));
-
-                return location;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-                if (resultSet != null && !resultSet.isClosed()){
-                    resultSet.close();
-                }
-            }
-
-             */
-        }
-    }
-
-    @Override
-    public boolean updateCategory(Category category) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        UUID cat_id = doesCategoryExist(category.getCategory_name());
-        if (cat_id != null) {
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY);
-                preparedStatement.setString(1, category.getCategory_name());
-                preparedStatement.setString(2, String.valueOf(category.getCategory_id()));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
-                }
-            }
-        } else {
-            return false;   // NOTE: The record doesn't exist.
-        }
-    }
-
-    @Override
-    public boolean updateLocation(Location location) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        UUID loc_id = doesLocationExist(location.getLocation_name());
-        if (loc_id != null) {
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION);
-                preparedStatement.setString(1, location.getLocation_name());
-                preparedStatement.setString(2, String.valueOf(location.getLocation_id()));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
-                }
-            }
-        } else {
-            return false;   // NOTE: The record doesn't exist.
-        }
-    }
-
-    @Override
-    public boolean deleteCategory(UUID cat_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        if(doesCategoryExist(cat_id)){
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORY);
-                preparedStatement.setString(1, String.valueOf(cat_id));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-            }
-        } else { return false; } // NOTE: This category doesn't exist.
-    }
-
-    @Override
-    public boolean deleteLocation(UUID loc_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        if(doesCategoryExist(loc_id)){
-            try {
-                connection = HikariConnection.getPooledConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LOCATION);
-                preparedStatement.setString(1, String.valueOf(loc_id));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-                if (connection != null && !connection.isClosed()){
-                    connection.close();
-                }
-            }
-        } else { return false; } // NOTE: This location doesn't exist.
     }
 }
