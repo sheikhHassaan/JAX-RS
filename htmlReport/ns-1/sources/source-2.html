@@ -1,0 +1,167 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Queries</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Services</a>
+</div>
+
+<h1>Coverage Summary for Class: Queries (Services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Queries</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Services;
+&nbsp;
+<b class="nc">&nbsp;public class Queries {</b>
+&nbsp;
+&nbsp;    public static final String DOES_CATEGORY_EXIST = &quot;SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_CATEGORY WHERE CATEGORY_NAME = ?&quot;;
+&nbsp;    public static final String DOES_LOCATION_EXIST = &quot;SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_LOCATION WHERE LOCATION_NAME = ?&quot;;
+&nbsp;
+&nbsp;    public static final String DOES_CATEGORY_ID_EXIST = &quot;SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_CATEGORY WHERE ID = ?&quot;;
+&nbsp;    public static final String DOES_LOCATION_ID_EXIST = &quot;SELECT COUNT(*) AS COUNT FROM INVENTORY.ITEM_LOCATION WHERE ID = ?&quot;;
+&nbsp;
+&nbsp;
+&nbsp;    public static final String GET_CATEGORY_ID_BY_NAME = &quot;SELECT ID FROM INVENTORY.ITEM_CATEGORY WHERE CATEGORY_NAME = ?&quot;;
+&nbsp;    public static final String GET_LOCATION_ID_BY_NAME = &quot;SELECT ID FROM INVENTORY.ITEM_LOCATION WHERE LOCATION_NAME = ?&quot;;
+&nbsp;
+&nbsp;    public static final String SELECT_ALL_DATA =
+&nbsp;            &quot;SELECT INVENTORY.ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_CATEGORY.CATEGORY_NAME, ITEM_LOCATION_ID, ITEM_LOCATION.LOCATION_NAME &quot; +
+&nbsp;            &quot;FROM INVENTORY.INVENTORY INNER JOIN INVENTORY.ITEM_CATEGORY &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_CATEGORY_ID = INVENTORY.ITEM_CATEGORY.ID &quot; +
+&nbsp;            &quot;INNER JOIN INVENTORY.ITEM_LOCATION &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID;&quot;;
+&nbsp;    public static final String SELECT_BY_ID =
+&nbsp;            &quot;SELECT INVENTORY.ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_CATEGORY.CATEGORY_NAME, ITEM_LOCATION_ID, ITEM_LOCATION.LOCATION_NAME &quot; +
+&nbsp;            &quot;FROM INVENTORY.INVENTORY INNER JOIN INVENTORY.ITEM_CATEGORY &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_CATEGORY_ID = INVENTORY.ITEM_CATEGORY.ID &quot; +
+&nbsp;            &quot;INNER JOIN INVENTORY.ITEM_LOCATION &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID &quot; +
+&nbsp;            &quot;WHERE INVENTORY.INVENTORY.ID = ?&quot;;
+&nbsp;    public static final String SELECT_ALL_BY_CATEGORY =
+&nbsp;            &quot;SELECT INVENTORY.ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_CATEGORY.CATEGORY_NAME, ITEM_LOCATION_ID, ITEM_LOCATION.LOCATION_NAME &quot; +
+&nbsp;            &quot;FROM INVENTORY.INVENTORY INNER JOIN INVENTORY.ITEM_CATEGORY &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_CATEGORY_ID = INVENTORY.ITEM_CATEGORY.ID &quot; +
+&nbsp;            &quot;INNER JOIN INVENTORY.ITEM_LOCATION &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID &quot; +
+&nbsp;            &quot;WHERE INVENTORY.ITEM_CATEGORY_ID = ?;&quot;;
+&nbsp;    public static final String SELECT_ALL_BY_LOCATION =
+&nbsp;            &quot;SELECT INVENTORY.ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_CATEGORY.CATEGORY_NAME, ITEM_LOCATION_ID, ITEM_LOCATION.LOCATION_NAME &quot; +
+&nbsp;            &quot;FROM INVENTORY.INVENTORY INNER JOIN INVENTORY.ITEM_CATEGORY &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_CATEGORY_ID = INVENTORY.ITEM_CATEGORY.ID &quot; +
+&nbsp;            &quot;INNER JOIN INVENTORY.ITEM_LOCATION &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID &quot; +
+&nbsp;            &quot;WHERE INVENTORY.ITEM_LOCATION_ID = ?;&quot;;
+&nbsp;    public static final String SELECT_ALL_BY_LOCATION_AND_CATEGORY =
+&nbsp;            &quot;SELECT INVENTORY.ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_CATEGORY.CATEGORY_NAME, ITEM_LOCATION_ID, ITEM_LOCATION.LOCATION_NAME &quot; +
+&nbsp;            &quot;FROM INVENTORY.INVENTORY INNER JOIN INVENTORY.ITEM_CATEGORY &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_CATEGORY_ID = INVENTORY.ITEM_CATEGORY.ID &quot; +
+&nbsp;            &quot;INNER JOIN INVENTORY.ITEM_LOCATION &quot; +
+&nbsp;            &quot;ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID &quot; +
+&nbsp;            &quot;WHERE INVENTORY.ITEM_LOCATION_ID = ? AND INVENTORY.ITEM_CATEGORY_ID = ?;&quot;;
+&nbsp;
+&nbsp;    public static final String INSERT_CATEGORY =
+&nbsp;            &quot;INSERT INTO INVENTORY.ITEM_CATEGORY (ID, CATEGORY_NAME) VALUES (?, ?);&quot;;
+&nbsp;
+&nbsp;    public static final String INSERT_LOCATION =
+&nbsp;            &quot;INSERT INTO INVENTORY.ITEM_LOCATION (ID, LOCATION_NAME) VALUES (?, ?);&quot;;
+&nbsp;    public static final String INSERT_INVENTORY =
+&nbsp;            &quot;INSERT INTO INVENTORY.INVENTORY (ID, ITEM_NAME, ITEM_QUANTITY, ITEM_CATEGORY_ID, ITEM_LOCATION_ID) VALUES (?, ?, ?, ?, ?);&quot;;
+&nbsp;
+&nbsp;    public static final String UPDATE_LOCATION = &quot;UPDATE INVENTORY.ITEM_LOCATION SET LOCATION_NAME = ? WHERE ID = ?;&quot;;
+&nbsp;    public static final String UPDATE_CATEGORY = &quot;UPDATE INVENTORY.ITEM_CATEGORY SET CATEGORY_NAME = ? WHERE ID = ?;&quot;;
+&nbsp;    public static final String UPDATE_INVENTORY = &quot;UPDATE INVENTORY.INVENTORY &quot; +
+&nbsp;            &quot;SET ITEM_NAME = ?, ITEM_QUANTITY = ?, ITEM_CATEGORY_ID = ?, ITEM_LOCATION_ID = ? WHERE ID = ?;&quot;;
+&nbsp;    public static final String DELETE_INVENTORY = &quot;DELETE FROM INVENTORY.INVENTORY WHERE ID = ?&quot;;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-19 18:26</div>
+</div>
+</body>
+</html>

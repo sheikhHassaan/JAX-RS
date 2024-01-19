@@ -17,7 +17,6 @@ public class InventoryResources extends Queries {
     InventoryServiceImpl inventoryService = InventoryServiceImpl.getInstance();
     Gson gson = new Gson();
 
-
     // note: 1. Fetch By ID, http://localhost:8080/inventory/{inventory_id}/ (HTTP GET)
     @GET
     @Path("/{inventory_id}")

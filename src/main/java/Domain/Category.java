@@ -10,6 +10,11 @@ public class Category {
 
     public Category(){}
 
+    public Category(UUID cat_id, String cat_name){
+        this.category_id = cat_id;
+        this.category_name = cat_name;
+    }
+
     public Category(String cat_name){
         this.category_name = cat_name;
     }

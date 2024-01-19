@@ -10,6 +10,11 @@ public class Location {
 
     public Location(){}
 
+    public Location(UUID loc_id, String loc_name){
+        this.location_id = loc_id;
+        this.location_name = loc_name;
+    }
+
     public Location(String loc_name){
         this.location_name = loc_name;
     }

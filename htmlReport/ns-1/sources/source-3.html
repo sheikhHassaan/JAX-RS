@@ -1,0 +1,110 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > InventoryService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Services</a>
+</div>
+
+<h1>Coverage Summary for Class: InventoryService (Services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">InventoryService</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Services;
+&nbsp;
+&nbsp;import Common.ConnectionNotFoundException;
+&nbsp;import Domain.Category;
+&nbsp;import Domain.Inventory;
+&nbsp;import Domain.Location;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;public interface InventoryService {
+&nbsp;
+&nbsp;//  note: Dependency functionalities ↓
+&nbsp;
+&nbsp;//    public boolean doesInventoryExist(UUID uuid) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public boolean doesCategoryExist(UUID cat_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public UUID doesCategoryExist(String cat_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public boolean doesLocationExist(UUID loc_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public UUID doesLocationExist(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public UUID getCategoryIdByName(String cat_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public UUID getLocationIdByName(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public Category addCategory(String cat_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public Location addLocation(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public boolean updateCategory(Category category, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public boolean updateLocation(Location location, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;//    public boolean deleteCategory(UUID cat_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;//    public boolean deleteLocation(UUID loc_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;
+&nbsp;
+&nbsp;//  note: Core functionalities ↓
+&nbsp;    public ArrayList&lt;Inventory&gt; fetchAll() throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public Inventory fetchByID(UUID uuid) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public ArrayList&lt;Inventory&gt; fetchAllByCategory(UUID uuid) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public ArrayList&lt;Inventory&gt; fetchAllByLocation(UUID uuid) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public ArrayList&lt;Inventory&gt; fetchAllByLocationAndCategory(UUID loc_id, UUID cat_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public Inventory addInventory(Inventory inventory) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public Inventory updateInventory(Inventory inventory) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;    public boolean delete(UUID inventory_id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-19 18:26</div>
+</div>
+</body>
+</html>

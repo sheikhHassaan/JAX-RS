@@ -145,7 +145,7 @@ public class InventoryServiceImpl implements InventoryService{
                 preparedStatement.setString(1, String.valueOf(id));
                 preparedStatement.setString(2, cat_name);
                 int rowsEffected = preparedStatement.executeUpdate();
-                if (rowsEffected > 0){
+                if (rowsEffected > 0) {
                     category.setCategory_id(id);
                     category.setCategory_name(cat_name);
                 }
@@ -233,11 +233,11 @@ public class InventoryServiceImpl implements InventoryService{
             return inventories;
 
         } finally {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();
+            }
+            if (connection != null && !connection.isClosed()){
+                connection.close();
             }
         }
     }
@@ -253,11 +253,11 @@ public class InventoryServiceImpl implements InventoryService{
             resultSet.next();
             return new Inventory(resultSet);
         } finally {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();
+            }
+            if (connection != null && !connection.isClosed()){
+                connection.close();
             }
         }
     }
@@ -278,11 +278,11 @@ public class InventoryServiceImpl implements InventoryService{
             }
             return inventories;
         } finally {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();
+            }
+            if (connection != null && !connection.isClosed()){
+                connection.close();
             }
         }
     }
@@ -303,11 +303,11 @@ public class InventoryServiceImpl implements InventoryService{
             }
             return inventories;
         } finally {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();
+            }
+            if (connection != null && !connection.isClosed()){
+                connection.close();
             }
         }
     }
@@ -329,11 +329,11 @@ public class InventoryServiceImpl implements InventoryService{
             }
             return inventories;
         } finally {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();
+            }
+            if (connection != null && !connection.isClosed()){
+                connection.close();
             }
         }
     }
