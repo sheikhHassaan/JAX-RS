@@ -10,15 +10,17 @@ public class Category {
 
     public Category(){}
 
+    public Category(String cat_name){
+        this.category_name = cat_name;
+    }
+
     public Category(Category category){
         this.category_id = category.getCategory_id();
         this.category_name = category.getCategory_name();
     }
 
     public boolean equals(Category category){
-//        if (this.category_id == category.getCategory_id())
-            return this.category_name == category.getCategory_name();
-//        return false;
+        return this.category_name == category.getCategory_name();
     }
 
     public UUID getCategory_id() {

@@ -14,13 +14,14 @@ public class HikariConnection {
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        config = new HikariConfig();
+        if(config == null){
+            config = new HikariConfig();
+        }
 
         config.setJdbcUrl("jdbc:mysql://localhost:3306/Inventory");
         config.setUsername("root");
         config.setPassword("Helloworld");
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(15);
 
         if (dataSource == null) {
             dataSource = new HikariDataSource(config);

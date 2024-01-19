@@ -12,9 +12,11 @@ public class Inventory {
 
 
 
-    public Inventory(){}
+    public Inventory(){
+        this.item_category = new Category();
+        this.item_location = new Location();
+    }
 
-    // todo: write constructor of Inventory class that accepts ResultSet as argument and puts all values in place.
     public Inventory(ResultSet resultSet) throws SQLException {
         Category category = new Category();
         Location location = new Location();
@@ -28,6 +30,14 @@ public class Inventory {
         location.setLocation_name(resultSet.getString(7));
         this.setItem_category(category);
         this.setItem_location(location);
+    }
+
+    public Inventory(UUID id, String item_name, int item_quantity, Category item_category, Location item_location){
+        this.id = id;
+        this.item_name = item_name;
+        this.item_quantity = item_quantity;
+        this.item_category = item_category;
+        this.item_location = item_location;
     }
 
     public Inventory(Inventory inventory) {
@@ -75,18 +85,16 @@ public class Inventory {
         return item_category;
     }
 
-    public void setItem_category(Category item_category) {
-        this.item_category.setCategory_id(item_category.getCategory_id());
-        this.item_category.setCategory_name(item_category.getCategory_name());
+    public void setItem_category(Category category) {
+        this.item_category = new Category(category);
     }
 
     public Location getItem_location() {
         return item_location;
     }
 
-    public void setItem_location(Location item_location) {
-        this.item_location.setLocation_id(item_location.getLocation_id());
-        this.item_location.setLocation_name(item_location.getLocation_name());
+    public void setItem_location(Location location) {
+        this.item_location = new Location(location);
     }
 
     @Override

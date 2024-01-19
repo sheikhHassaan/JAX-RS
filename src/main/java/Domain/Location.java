@@ -10,15 +10,17 @@ public class Location {
 
     public Location(){}
 
+    public Location(String loc_name){
+        this.location_name = loc_name;
+    }
+
     public Location(Location location){
         this.location_id = location.getLocation_id();
         this.location_name = location.getLocation_name();
     }
 
     public boolean equals(Location location){
-//        if (this.location_id == location.getLocation_id())
-            return this.location_name == location.getLocation_name();
-//        return false;
+        return this.location_name == location.getLocation_name();
     }
 
     public UUID getLocation_id() {
