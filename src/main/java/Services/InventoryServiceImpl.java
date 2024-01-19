@@ -29,7 +29,7 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public boolean doesCategoryExist(UUID cat_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+    public boolean doesCategoryExist(UUID cat_id, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(DOES_CATEGORY_ID_EXIST);
@@ -64,7 +64,7 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
     @Override
-    public boolean doesLocationExist(UUID loc_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+    public boolean doesLocationExist(UUID loc_id, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(DOES_LOCATION_ID_EXIST);
@@ -99,7 +99,7 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
     @Override
-    public UUID getCategoryIdByName(String cat_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+    public UUID getCategoryIdByName(String cat_name, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         String id;
         try {
@@ -119,7 +119,7 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
     @Override
-    public UUID getLocationIdByName(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+    public UUID getLocationIdByName(String loc_name, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_ID_BY_NAME);
@@ -212,37 +212,8 @@ public class InventoryServiceImpl implements InventoryService{
             return false;   // NOTE: The record doesn't exist.
         }
     }
-    /*
-    @Override
-    public boolean deleteCategory(UUID cat_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        if(doesCategoryExist(cat_id, connection)){
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORY);
-                preparedStatement.setString(1, String.valueOf(cat_id));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-            }
-        } else { return false; } // NOTE: This category doesn't exist.
-    }
-    */
-    /*
-    @Override
-    public boolean deleteLocation(UUID loc_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        if(doesCategoryExist(loc_id, connection)){
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_LOCATION);
-                preparedStatement.setString(1, String.valueOf(loc_id));
-                int rowsEffected = preparedStatement.executeUpdate();
-                return rowsEffected > 0;
-            } finally {
-            }
-        } else { return false; } // NOTE: This location doesn't exist.
-    }
-     */
 
 
-//  note: Core functionalities ↓
     @Override
     public ArrayList<Inventory> fetchAll() throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
 
