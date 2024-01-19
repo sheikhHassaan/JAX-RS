@@ -18,7 +18,6 @@ public class InventoryResources extends Queries {
     Gson gson = new Gson();
 
 
-
     // note: 1. Fetch By ID, http://localhost:8080/inventory/{inventory_id}/ (HTTP GET)
     @GET
     @Path("/{inventory_id}")
@@ -100,7 +99,6 @@ public class InventoryResources extends Queries {
 
 
 
-
     // note: 4. Fetch All By Location, http://localhost:8080/inventory/list?location=7 (HTTP GET)
     @GET
     @Path("/listByLocation")        //  "/list"
@@ -128,7 +126,6 @@ public class InventoryResources extends Queries {
 
 
 
-
     // note: 5. Fetch All By Location And Category, http://localhost:8080/inventory/list?location=7&category=22 (HTTP GET)
     @GET
     @Path("/listByLocationAndCategory")        //  "/list"
@@ -153,7 +150,6 @@ public class InventoryResources extends Queries {
             return Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong.").build();
         }
     }
-
 
 
 
@@ -212,7 +208,6 @@ public class InventoryResources extends Queries {
             return Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong.").build();
         }
     }
-
 
 
 
