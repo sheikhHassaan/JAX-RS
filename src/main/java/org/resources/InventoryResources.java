@@ -1,9 +1,8 @@
 package org.resources;
 
-import org.common.ConnectionNotFoundException;
-import org.domain.Inventory;
-import org.services.InventoryServiceImpl;
-import org.services.Queries;
+import org.common.*;
+import org.domain.*;
+import org.services.*;
 import com.google.gson.Gson;
 
 import javax.ws.rs.*;
@@ -236,19 +235,50 @@ public class InventoryResources extends Queries {
         }
     }
 
-//    @POST
-//    @Path("/addLocation")
-//    @Produces("text/plain")
-//    public Response addLocation(String locationJson){
-//        Location location = gson.fromJson(locationJson, Location.class);
-//
-//    }
+    @POST
+    @Path("/addLocation")
+    @Produces("text/plain")
+    public Response addLocation(String locationJson) {
+        Location location = gson.fromJson(locationJson, Location.class);
+        try {
+            location = inventoryService.addLocation(location.getLocation_name());
+            if (location != null)
+                return Response.ok().entity(gson.toJson(location)).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Location already exists.").build();
+        } catch (SQLException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (ClassNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (ConnectionNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (NullPointerException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
 
-//    @POST
-//    @Path("/addCategory")
-//    @Produces("text/plain")
-//    public Response addCategory(String categoryJson){
-//
-//    }
+    @POST
+    @Path("/addCategory")
+    @Produces("text/plain")
+    public Response addCategory(String categoryJson){
+        Category category = gson.fromJson(categoryJson, Category.class);
+        try {
+            category = inventoryService.addCategory(category.getCategory_name());
+            if (category != null)
+                return Response.ok().entity(gson.toJson(category)).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Category already exists.").build();
+        } catch (SQLException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (ClassNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (ConnectionNotFoundException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (NullPointerException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
 
 }

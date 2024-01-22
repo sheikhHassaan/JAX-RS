@@ -25,8 +25,8 @@ public interface InventoryService {
     public Location addLocation(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     public boolean updateCategory(Category category, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     public boolean updateLocation(Location location, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
-//    public boolean deleteCategory(UUID cat_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
-//    public boolean deleteLocation(UUID loc_id, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+    public Location addLocation(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+    public Category addCategory(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
 
 
 //  note: Core functionalities ↓

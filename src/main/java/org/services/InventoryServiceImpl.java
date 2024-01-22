@@ -217,6 +217,18 @@ public class InventoryServiceImpl implements InventoryService{
         }
     }
 
+    @Override
+    public Location addLocation(String loc_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        connection = HikariConnection.getPooledConnection();
+        return addLocation(loc_name, connection);
+    }
+
+    @Override
+    public Category addCategory(String cat_name) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        connection = HikariConnection.getPooledConnection();
+        return addCategory(cat_name, connection);
+    }
+
 
     @Override
     public ArrayList<Inventory> fetchAll() throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
