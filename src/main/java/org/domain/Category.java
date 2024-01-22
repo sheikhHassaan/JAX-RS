@@ -1,54 +1,57 @@
 package org.domain;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
 
 public class Category {
-    private UUID category_id;
-    private String category_name;
+    @SerializedName("category_id")
+    private UUID categoryId;
+    @SerializedName("category_name")
+    private String categoryName;
 
 
 
     public Category(){}
 
-    public Category(UUID cat_id, String cat_name){
-        this.category_id = cat_id;
-        this.category_name = cat_name;
+    public Category(UUID catId, String catName){
+        this.categoryId = catId;
+        this.categoryName = catName;
     }
 
-    public Category(String cat_name){
-        this.category_name = cat_name;
+    public Category(String catName){
+        this.categoryName = catName;
     }
 
     public Category(Category category){
-        this.category_id = category.getCategory_id();
-        this.category_name = category.getCategory_name();
+        this.categoryId = category.getCategoryId();
+        this.categoryName = category.getCategoryName();
     }
 
     public boolean equals(Category category){
-        return this.category_name == category.getCategory_name();
+        return this.categoryName == category.getCategoryName();
     }
 
-    public UUID getCategory_id() {
-        return category_id;
+    public UUID getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(UUID category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(UUID categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "category_id=" + category_id +
-                ", category_name='" + category_name + '\'' +
+                "categoryId=" + categoryId +
+                ", categoryName='" + categoryName + '\'' +
                 '}';
     }
 }

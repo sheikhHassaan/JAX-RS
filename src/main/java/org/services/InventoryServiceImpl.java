@@ -5,7 +5,6 @@ import org.common.ConnectionNotFoundException;
 import org.domain.Category;
 import org.domain.Inventory;
 import org.domain.Location;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -150,14 +149,14 @@ public class InventoryServiceImpl implements InventoryService{
                 preparedStatement.setString(2, cat_name);
                 int rowsEffected = preparedStatement.executeUpdate();
                 if (rowsEffected > 0) {
-                    category.setCategory_id(id);
-                    category.setCategory_name(cat_name);
+                    category.setCategoryId(id);
+                    category.setCategoryName(cat_name);
                 }
                 return category;
             } finally {}
         } else {
-            category.setCategory_id(cat_id);
-            category.setCategory_name(cat_name);
+            category.setCategoryId(cat_id);
+            category.setCategoryName(cat_name);
             return category;
         }
     }
@@ -173,26 +172,26 @@ public class InventoryServiceImpl implements InventoryService{
                 preparedStatement.setString(2, loc_name);
                 int rowsEffected = preparedStatement.executeUpdate();
                 if (rowsEffected > 0){
-                    location.setLocation_id(id);
-                    location.setLocation_name(loc_name);
+                    location.setLocationId(id);
+                    location.setLocationName(loc_name);
                 }
                 return location;
             } finally {}
         } else {
-            location.setLocation_id(loc_id);
-            location.setLocation_name(loc_name);
+            location.setLocationId(loc_id);
+            location.setLocationName(loc_name);
             return location;
         }
     }
     @Override
     public boolean updateCategory(Category category, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        UUID cat_id = doesCategoryExist(category.getCategory_name(), connection);
+        UUID cat_id = doesCategoryExist(category.getCategoryName(), connection);
         if (cat_id != null) {
-            category.setCategory_id(cat_id);
+            category.setCategoryId(cat_id);
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_CATEGORY);
-                preparedStatement.setString(1, category.getCategory_name());
-                preparedStatement.setString(2, String.valueOf(category.getCategory_id()));
+                preparedStatement.setString(1, category.getCategoryName());
+                preparedStatement.setString(2, String.valueOf(category.getCategoryId()));
                 int rowsEffected = preparedStatement.executeUpdate();
                 return rowsEffected > 0;
             } finally {}
@@ -202,13 +201,13 @@ public class InventoryServiceImpl implements InventoryService{
     }
     @Override
     public boolean updateLocation(Location location, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        UUID loc_id = doesLocationExist(location.getLocation_name(), connection);
+        UUID loc_id = doesLocationExist(location.getLocationName(), connection);
         if (loc_id != null) {
-            location.setLocation_id(loc_id);
+            location.setLocationId(loc_id);
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_LOCATION);
-                preparedStatement.setString(1, location.getLocation_name());
-                preparedStatement.setString(2, String.valueOf(location.getLocation_id()));
+                preparedStatement.setString(1, location.getLocationName());
+                preparedStatement.setString(2, String.valueOf(location.getLocationId()));
                 int rowsEffected = preparedStatement.executeUpdate();
                 return rowsEffected > 0;
             } finally {}
@@ -361,20 +360,20 @@ public class InventoryServiceImpl implements InventoryService{
 
             connection = HikariConnection.getPooledConnection();
 
-            inventory.setItem_category(addCategory(inv.getItem_category().getCategory_name(), connection));
-            inventory.setItem_location(addLocation(inv.getItem_location().getLocation_name(), connection));
+            inventory.setItemCategory(addCategory(inv.getItemCategory().getCategoryName(), connection));
+            inventory.setItemLocation(addLocation(inv.getItemLocation().getLocationName(), connection));
 
             PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_INVENTORY);
             preparedStatement.setString(1, String.valueOf(inv.getId()));
-            preparedStatement.setString(2, inv.getItem_name());
-            preparedStatement.setInt(3, inv.getItem_quantity());
-            preparedStatement.setString(4, String.valueOf(inventory.getItem_category().getCategory_id()));
-            preparedStatement.setString(5, String.valueOf(inventory.getItem_location().getLocation_id()));
+            preparedStatement.setString(2, inv.getItemName());
+            preparedStatement.setInt(3, inv.getItemQuantity());
+            preparedStatement.setString(4, String.valueOf(inventory.getItemCategory().getCategoryId()));
+            preparedStatement.setString(5, String.valueOf(inventory.getItemLocation().getLocationId()));
 
             if (preparedStatement.executeUpdate() > 0){
                 inventory.setId(inv.getId());
-                inventory.setItem_name(inv.getItem_name());
-                inventory.setItem_quantity(inv.getItem_quantity());
+                inventory.setItemName(inv.getItemName());
+                inventory.setItemQuantity(inv.getItemQuantity());
             }
             return inventory;
             } finally {
@@ -385,25 +384,25 @@ public class InventoryServiceImpl implements InventoryService{
     }
     @Override
     public Inventory updateInventory(Inventory inventory) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
-        Category category = new Category(inventory.getItem_category().getCategory_name());
-        Location location = new Location(inventory.getItem_location().getLocation_name());
+        Category category = new Category(inventory.getItemCategory().getCategoryName());
+        Location location = new Location(inventory.getItemLocation().getLocationName());
         connection = HikariConnection.getPooledConnection();
-            if (updateCategory(inventory.getItem_category(), connection)) {
-                if (updateLocation(inventory.getItem_location(), connection)) {
+            if (updateCategory(inventory.getItemCategory(), connection)) {
+                if (updateLocation(inventory.getItemLocation(), connection)) {
                     try {
                         PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_INVENTORY);
-                        preparedStatement.setString(1, inventory.getItem_name());
-                        preparedStatement.setInt(2, inventory.getItem_quantity());
-                        preparedStatement.setString(3, String.valueOf(inventory.getItem_category().getCategory_id()));
-                        preparedStatement.setString(4, String.valueOf(inventory.getItem_location().getLocation_id()));
+                        preparedStatement.setString(1, inventory.getItemName());
+                        preparedStatement.setInt(2, inventory.getItemQuantity());
+                        preparedStatement.setString(3, String.valueOf(inventory.getItemCategory().getCategoryId()));
+                        preparedStatement.setString(4, String.valueOf(inventory.getItemLocation().getLocationId()));
                         preparedStatement.setString(5, String.valueOf(inventory.getId()));
                         int rowsEffected = preparedStatement.executeUpdate();
                         if (rowsEffected > 0){
-                            category.setCategory_id(getCategoryIdByName(category.getCategory_name(), connection));
-                            location.setLocation_id(getLocationIdByName(location.getLocation_name(), connection));
+                            category.setCategoryId(getCategoryIdByName(category.getCategoryName(), connection));
+                            location.setLocationId(getLocationIdByName(location.getLocationName(), connection));
 
-                            inventory.setItem_category(category);
-                            inventory.setItem_location(location);
+                            inventory.setItemCategory(category);
+                            inventory.setItemLocation(location);
                             return inventory;
                         }
                     } finally {

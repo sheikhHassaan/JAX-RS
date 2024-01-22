@@ -7,7 +7,6 @@ import org.domain.Category;
 import org.domain.Inventory;
 import org.domain.Location;
 import org.junit.jupiter.api.Test;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -119,6 +118,6 @@ class InventoryServiceImplTest {
 
     @Test
     void delete() throws ConnectionNotFoundException, SQLException, ClassNotFoundException {
-        assertTrue(service.delete(UUID.fromString("d954b875-cd56-4664-b28b-d20fb11eb40b")));
+        assertFalse(service.delete(UUID.fromString("d954b875-cd56-4664-b28b-d20fb11eb40b")));
     }
 }

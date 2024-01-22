@@ -21,7 +21,7 @@ public class HikariConnection {
                 config.setJdbcUrl(System.getenv("DB_URL"));
                 config.setUsername(System.getenv("DB_USER"));
                 config.setPassword(System.getenv("DB_PASSWORD"));
-                config.setMaximumPoolSize(15);
+                config.setMaximumPoolSize(25);
 
                 HikariConnection.dataSource = new HikariDataSource(config);
             }

@@ -1,20 +1,27 @@
 package org.domain;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 public class Inventory {
+    @SerializedName("id")
     private UUID id;
-    private String item_name;
-    private int item_quantity;
-    private Category item_category;
-    private Location item_location;
+    @SerializedName("item_name")
+    private String itemName;
+    @SerializedName("item_quantity")
+    private int itemQuantity;
+    @SerializedName("item_category")
+    private Category itemCategory;
+    @SerializedName("item_location")
+    private Location itemLocation;
 
 
 
     public Inventory(){
-        this.item_category = new Category();
-        this.item_location = new Location();
+        this.itemCategory = new Category();
+        this.itemLocation = new Location();
     }
 
     public Inventory(ResultSet resultSet) throws SQLException {
@@ -22,38 +29,38 @@ public class Inventory {
         Location location = new Location();
 
         this.setId(UUID.fromString(resultSet.getString(1)));
-        this.setItem_name(resultSet.getString(2));
-        this.setItem_quantity(resultSet.getInt(3));
-        category.setCategory_id(UUID.fromString(resultSet.getString(4)));
-        category.setCategory_name(resultSet.getString(5));
-        location.setLocation_id(UUID.fromString(resultSet.getString(6)));
-        location.setLocation_name(resultSet.getString(7));
-        this.setItem_category(category);
-        this.setItem_location(location);
+        this.setItemName(resultSet.getString(2));
+        this.setItemQuantity(resultSet.getInt(3));
+        category.setCategoryId(UUID.fromString(resultSet.getString(4)));
+        category.setCategoryName(resultSet.getString(5));
+        location.setLocationId(UUID.fromString(resultSet.getString(6)));
+        location.setLocationName(resultSet.getString(7));
+        this.setItemCategory(category);
+        this.setItemLocation(location);
     }
 
-    public Inventory(UUID id, String item_name, int item_quantity, Category item_category, Location item_location){
+    public Inventory(UUID id, String itemName, int itemQuantity, Category itemCategory, Location itemLocation){
         this.id = id;
-        this.item_name = item_name;
-        this.item_quantity = item_quantity;
-        this.item_category = item_category;
-        this.item_location = item_location;
+        this.itemName = itemName;
+        this.itemQuantity = itemQuantity;
+        this.itemCategory = itemCategory;
+        this.itemLocation = itemLocation;
     }
 
     public Inventory(Inventory inventory) {
         this.id = inventory.getId();
-        this.item_name = inventory.getItem_name();
-        this.item_quantity = inventory.getItem_quantity();
-        this.item_category = new Category(inventory.item_category);
-        this.item_location = new Location(inventory.item_location);
+        this.itemName = inventory.getItemName();
+        this.itemQuantity = inventory.getItemQuantity();
+        this.itemCategory = new Category(inventory.itemCategory);
+        this.itemLocation = new Location(inventory.itemLocation);
     }
 
     public boolean equals(Inventory inventory){
 //        if(this.id == inventory.getId())
-            if (this.item_name == inventory.getItem_name())
-                if (this.item_quantity == inventory.getItem_quantity())
-                    if (this.item_category.equals(inventory.item_category))
-                        return this.item_location.equals(inventory.item_location);
+            if (this.itemName == inventory.getItemName())
+                if (this.itemQuantity == inventory.getItemQuantity())
+                    if (this.itemCategory.equals(inventory.itemCategory))
+                        return this.itemLocation.equals(inventory.itemLocation);
         return false;
     }
 
@@ -65,46 +72,46 @@ public class Inventory {
         this.id = id;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public int getItem_quantity() {
-        return item_quantity;
+    public int getItemQuantity() {
+        return itemQuantity;
     }
 
-    public void setItem_quantity(int item_quantity) {
-        this.item_quantity = item_quantity;
+    public void setItemQuantity(int itemQuantity) {
+        this.itemQuantity = itemQuantity;
     }
 
-    public Category getItem_category() {
-        return item_category;
+    public Category getItemCategory() {
+        return itemCategory;
     }
 
-    public void setItem_category(Category category) {
-        this.item_category = new Category(category);
+    public void setItemCategory(Category category) {
+        this.itemCategory = new Category(category);
     }
 
-    public Location getItem_location() {
-        return item_location;
+    public Location getItemLocation() {
+        return itemLocation;
     }
 
-    public void setItem_location(Location location) {
-        this.item_location = new Location(location);
+    public void setItemLocation(Location location) {
+        this.itemLocation = new Location(location);
     }
 
     @Override
     public String toString() {
         return "Inventory{" +
                 "id=" + id +
-                ", item_name='" + item_name + '\'' +
-                ", item_quantity=" + item_quantity +
-                ", item_category=" + item_category +
-                ", item_location=" + item_location +
+                ", itemName='" + itemName + '\'' +
+                ", itemQuantity=" + itemQuantity +
+                ", itemCategory=" + itemCategory +
+                ", itemLocation=" + itemLocation +
                 '}';
     }
 }

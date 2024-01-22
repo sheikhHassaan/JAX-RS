@@ -1,54 +1,58 @@
 package org.domain;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.UUID;
 
 public class Location {
-    private UUID location_id;
-    private String location_name;
+    @SerializedName("location_id")
+    private UUID locationId;
+    @SerializedName("location_name")
+    private String locationName;
 
 
 
     public Location(){}
 
-    public Location(UUID loc_id, String loc_name){
-        this.location_id = loc_id;
-        this.location_name = loc_name;
+    public Location(UUID locId, String locName){
+        this.locationId = locId;
+        this.locationName = locName;
     }
 
-    public Location(String loc_name){
-        this.location_name = loc_name;
+    public Location(String locName){
+        this.locationName = locName;
     }
 
     public Location(Location location){
-        this.location_id = location.getLocation_id();
-        this.location_name = location.getLocation_name();
+        this.locationId = location.getLocationId();
+        this.locationName = location.getLocationName();
     }
 
     public boolean equals(Location location){
-        return this.location_name == location.getLocation_name();
+        return this.locationName == location.getLocationName();
     }
 
-    public UUID getLocation_id() {
-        return location_id;
+    public UUID getLocationId() {
+        return locationId;
     }
 
-    public void setLocation_id(UUID location_id) {
-        this.location_id = location_id;
+    public void setLocationId(UUID locationId) {
+        this.locationId = locationId;
     }
 
-    public String getLocation_name() {
-        return location_name;
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void setLocation_name(String location_name) {
-        this.location_name = location_name;
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     @Override
     public String toString() {
         return "Location{" +
-                "location_id=" + location_id +
-                ", location_name='" + location_name + '\'' +
+                "locationId=" + locationId +
+                ", locationName='" + locationName + '\'' +
                 '}';
     }
 
