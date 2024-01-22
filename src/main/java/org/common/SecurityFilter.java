@@ -1,4 +1,4 @@
-package Common;
+package org.common;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;

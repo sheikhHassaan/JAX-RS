@@ -1,10 +1,11 @@
-package Resources;
+package org.resources;
 
-import Common.ConnectionNotFoundException;
-import Domain.Inventory;
-import Services.InventoryServiceImpl;
-import Services.Queries;
+import org.common.ConnectionNotFoundException;
+import org.domain.Inventory;
+import org.services.InventoryServiceImpl;
+import org.services.Queries;
 import com.google.gson.Gson;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -234,4 +235,20 @@ public class InventoryResources extends Queries {
             return Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong.").build();
         }
     }
+
+//    @POST
+//    @Path("/addLocation")
+//    @Produces("text/plain")
+//    public Response addLocation(String locationJson){
+//        Location location = gson.fromJson(locationJson, Location.class);
+//
+//    }
+
+//    @POST
+//    @Path("/addCategory")
+//    @Produces("text/plain")
+//    public Response addCategory(String categoryJson){
+//
+//    }
+
 }

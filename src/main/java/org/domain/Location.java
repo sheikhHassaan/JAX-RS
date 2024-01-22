@@ -1,4 +1,4 @@
-package Domain;
+package org.domain;
 
 import java.util.UUID;
 

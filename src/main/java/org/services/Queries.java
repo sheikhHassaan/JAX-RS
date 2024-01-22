@@ -1,4 +1,4 @@
-package Services;
+package org.services;
 
 public class Queries {
 

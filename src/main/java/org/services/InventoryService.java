@@ -1,12 +1,11 @@
-package Services;
+package org.services;
 
-import Common.ConnectionNotFoundException;
-import Domain.Category;
-import Domain.Inventory;
-import Domain.Location;
+import org.common.ConnectionNotFoundException;
+import org.domain.Category;
+import org.domain.Inventory;
+import org.domain.Location;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;

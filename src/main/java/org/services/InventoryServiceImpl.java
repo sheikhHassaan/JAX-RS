@@ -1,17 +1,17 @@
-package Services;
+package org.services;
 
-import Common.HikariConnection;
-import Common.ConnectionNotFoundException;
-import Domain.Category;
-import Domain.Inventory;
-import Domain.Location;
+import org.common.HikariConnection;
+import org.common.ConnectionNotFoundException;
+import org.domain.Category;
+import org.domain.Inventory;
+import org.domain.Location;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.UUID;
-import static Services.Queries.*;
 
 public class InventoryServiceImpl implements InventoryService{
     public static InventoryServiceImpl inventoryService;
@@ -32,7 +32,7 @@ public class InventoryServiceImpl implements InventoryService{
     public boolean doesCategoryExist(UUID cat_id, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement(DOES_CATEGORY_ID_EXIST);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.DOES_CATEGORY_ID_EXIST);
             preparedStatement.setString(1, String.valueOf(cat_id));
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -44,11 +44,15 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
+
+
+
+
     @Override
     public UUID doesCategoryExist(String cat_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DOES_CATEGORY_EXIST);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.DOES_CATEGORY_EXIST);
             preparedStatement.setString(1, cat_name);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -67,7 +71,7 @@ public class InventoryServiceImpl implements InventoryService{
     public boolean doesLocationExist(UUID loc_id, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement(DOES_LOCATION_ID_EXIST);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.DOES_LOCATION_ID_EXIST);
             preparedStatement.setString(1, String.valueOf(loc_id));
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -83,7 +87,7 @@ public class InventoryServiceImpl implements InventoryService{
     public UUID doesLocationExist(String loc_name, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
         ResultSet resultSet = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DOES_LOCATION_EXIST);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.DOES_LOCATION_EXIST);
             preparedStatement.setString(1, loc_name);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -103,7 +107,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         String id;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_CATEGORY_ID_BY_NAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_CATEGORY_ID_BY_NAME);
             preparedStatement.setString(1, cat_name);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -122,7 +126,7 @@ public class InventoryServiceImpl implements InventoryService{
     public UUID getLocationIdByName(String loc_name, Connection connection) throws SQLException {
         ResultSet resultSet = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(GET_LOCATION_ID_BY_NAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.GET_LOCATION_ID_BY_NAME);
             preparedStatement.setString(1, loc_name);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -141,7 +145,7 @@ public class InventoryServiceImpl implements InventoryService{
         if(cat_id == null){   //!doesCategoryExist(cat_name)
             UUID id = UUID.randomUUID();
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CATEGORY);
+                PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_CATEGORY);
                 preparedStatement.setString(1, String.valueOf(id));
                 preparedStatement.setString(2, cat_name);
                 int rowsEffected = preparedStatement.executeUpdate();
@@ -164,7 +168,7 @@ public class InventoryServiceImpl implements InventoryService{
         if(loc_id == null){   // !doesLocationExist(loc_name)
             UUID id = UUID.randomUUID();
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_LOCATION);
+                PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_LOCATION);
                 preparedStatement.setString(1, String.valueOf(id));
                 preparedStatement.setString(2, loc_name);
                 int rowsEffected = preparedStatement.executeUpdate();
@@ -186,7 +190,7 @@ public class InventoryServiceImpl implements InventoryService{
         if (cat_id != null) {
             category.setCategory_id(cat_id);
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY);
+                PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_CATEGORY);
                 preparedStatement.setString(1, category.getCategory_name());
                 preparedStatement.setString(2, String.valueOf(category.getCategory_id()));
                 int rowsEffected = preparedStatement.executeUpdate();
@@ -202,7 +206,7 @@ public class InventoryServiceImpl implements InventoryService{
         if (loc_id != null) {
             location.setLocation_id(loc_id);
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_LOCATION);
+                PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_LOCATION);
                 preparedStatement.setString(1, location.getLocation_name());
                 preparedStatement.setString(2, String.valueOf(location.getLocation_id()));
                 int rowsEffected = preparedStatement.executeUpdate();
@@ -222,7 +226,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_DATA);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_ALL_DATA);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
@@ -247,7 +251,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_BY_ID);
             preparedStatement.setString(1, String.valueOf(uuid));
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -269,7 +273,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_CATEGORY);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_ALL_BY_CATEGORY);
             preparedStatement.setString(1, String.valueOf(uuid));
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
@@ -294,7 +298,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_LOCATION);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_ALL_BY_LOCATION);
             preparedStatement.setString(1, String.valueOf(uuid));
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
@@ -319,7 +323,7 @@ public class InventoryServiceImpl implements InventoryService{
         ResultSet resultSet = null;
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BY_LOCATION_AND_CATEGORY);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.SELECT_ALL_BY_LOCATION_AND_CATEGORY);
             preparedStatement.setString(1, String.valueOf(loc_id));
             preparedStatement.setString(2, String.valueOf(cat_id));
             resultSet = preparedStatement.executeQuery();
@@ -348,7 +352,7 @@ public class InventoryServiceImpl implements InventoryService{
             inventory.setItem_category(addCategory(inv.getItem_category().getCategory_name(), connection));
             inventory.setItem_location(addLocation(inv.getItem_location().getLocation_name(), connection));
 
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INVENTORY);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.INSERT_INVENTORY);
             preparedStatement.setString(1, String.valueOf(inv.getId()));
             preparedStatement.setString(2, inv.getItem_name());
             preparedStatement.setInt(3, inv.getItem_quantity());
@@ -375,7 +379,7 @@ public class InventoryServiceImpl implements InventoryService{
             if (updateCategory(inventory.getItem_category(), connection)) {
                 if (updateLocation(inventory.getItem_location(), connection)) {
                     try {
-                        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_INVENTORY);
+                        PreparedStatement preparedStatement = connection.prepareStatement(Queries.UPDATE_INVENTORY);
                         preparedStatement.setString(1, inventory.getItem_name());
                         preparedStatement.setInt(2, inventory.getItem_quantity());
                         preparedStatement.setString(3, String.valueOf(inventory.getItem_category().getCategory_id()));
@@ -404,7 +408,7 @@ public class InventoryServiceImpl implements InventoryService{
         // note: no cascade delete.
         try {
             connection = HikariConnection.getPooledConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_INVENTORY);
+            PreparedStatement preparedStatement = connection.prepareStatement(Queries.DELETE_INVENTORY);
             preparedStatement.setString(1, String.valueOf(inventory_id));
             int rowsEffected = preparedStatement.executeUpdate();
             return rowsEffected > 0;

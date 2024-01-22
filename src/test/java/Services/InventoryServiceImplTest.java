@@ -1,10 +1,11 @@
 package Services;
 
-import Common.ConnectionNotFoundException;
-import Common.HikariConnection;
-import Domain.Category;
-import Domain.Inventory;
-import Domain.Location;
+import org.services.InventoryServiceImpl;
+import org.common.ConnectionNotFoundException;
+import org.common.HikariConnection;
+import org.domain.Category;
+import org.domain.Inventory;
+import org.domain.Location;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
