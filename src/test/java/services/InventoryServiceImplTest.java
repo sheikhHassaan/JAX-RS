@@ -1,7 +1,12 @@
-package Services;
+package services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 import java.sql.Connection;
+
+import com.google.gson.Gson;
 import org.domain.Location;
 import org.domain.Category;
 import org.domain.Inventory;
@@ -85,9 +90,19 @@ class InventoryServiceImplTest {
     }
 
     @Test
-    void addInventory() throws ConnectionNotFoundException, SQLException, ClassNotFoundException {
-        assertNotNull(service.addInventory(new Inventory(String.valueOf(UUID.randomUUID()), "TestProduct", 1, new Category("3dac5d7b-2247-49b8-a80e-15c8a80830e1", "Phone"), new Location("5aeadcb0-97cb-4db4-8173-bf7fe2bf89cc", "Lahore")))
-                , "The function addInventory() returned null.");
+    void addInventory() throws ConnectionNotFoundException, SQLException, ClassNotFoundException, IOException {
+
+        Gson gson = new Gson();
+//        String filePath = "/Users/hassaan/IdeaProjects/Project/src/test/java/Resources/InventoryPayload";
+        String filePath = "src/test/java/resources/InventoryPayload";
+        String fileInventoryJson = new String(Files.readAllBytes(Paths.get(filePath)));
+        Inventory fileInventory = gson.fromJson(fileInventoryJson, Inventory.class);
+        Inventory inventory = service.addInventory(new Inventory(String.valueOf(UUID.randomUUID()), fileInventory.getItemName(), fileInventory.getItemQuantity(), fileInventory.getItemCategory(), fileInventory.getItemLocation()));
+
+        assertEquals(fileInventory.getItemName(), inventory.getItemName());
+        assertEquals(fileInventory.getItemQuantity() , inventory.getItemQuantity());
+        assertEquals(fileInventory.getItemCategory().getCategoryName() , inventory.getItemCategory().getCategoryName());
+        assertEquals(fileInventory.getItemLocation().getLocationName() , inventory.getItemLocation().getLocationName());
     }
 
     @Test

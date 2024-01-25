@@ -18,10 +18,13 @@ public interface InventoryService {
     Category getCategory(String catName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Location getLocation(String locName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Category addCategory(String catName, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+    Category saveCategory(String catName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Location addLocation(String locName, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+    Location saveLocation(String locName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
 
 
 //  note: Core functionalities ↓
+    ArrayList<Inventory> fetch(String categoryId, String locationId) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     ArrayList<Inventory> fetchAll() throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Inventory fetchByID(String id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     ArrayList<Inventory> fetchAllByCategory(String id) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;

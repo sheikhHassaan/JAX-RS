@@ -122,6 +122,27 @@ public class InventoryServiceImpl implements InventoryService{
         }
         return category;
     }
+
+    @Override
+    public Category saveCategory(String catName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+
+        Category category;
+        Connection connection = null;
+        try {
+            if (!isCategoryExist(catName)) {
+                connection = HikariConnection.getConnection();
+                category = new Category(addCategory(catName, connection));
+            } else {
+                category = new Category(getCategory(catName));
+            }
+            return category;
+        } finally {
+            if (connection != null && !connection.isClosed()){
+                connection.close();
+            }
+        }
+    }
+
     @Override
     public Location addLocation(String locName, Connection connection) throws SQLException {
         Location location = new Location();
@@ -135,6 +156,38 @@ public class InventoryServiceImpl implements InventoryService{
             location.setLocationName(locName);
         }
         return location;
+    }
+
+    @Override
+    public Location saveLocation(String locName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        Location location;
+        Connection connection = null;
+        try {
+            if (!isLocationExist(locName)) {
+                connection = HikariConnection.getConnection();
+                location = new Location(addLocation(locName, connection));
+            } else {
+                location = new Location(getLocation(locName));
+            }
+            return location;
+        } finally {
+            if (connection != null && !connection.isClosed()){
+                connection.close();
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<Inventory> fetch(String categoryId, String locationId) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+        if (categoryId == null && locationId == null){
+            return fetchAll();
+        } else if (categoryId != null && locationId != null) {
+            return fetchAllByLocationAndCategory(locationId, categoryId);
+        } else if (categoryId != null) {
+            return fetchAllByCategory(categoryId);
+        } else {
+            return fetchAllByLocation(locationId);
+        }
     }
 
 
