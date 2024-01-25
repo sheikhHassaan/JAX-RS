@@ -1,13 +1,12 @@
 package org.domain;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
+import com.google.gson.annotations.SerializedName;
+
 public class Inventory {
     @SerializedName("id")
-    private UUID id;
+    private String id;
     @SerializedName("item_name")
     private String itemName;
     @SerializedName("item_quantity")
@@ -28,18 +27,18 @@ public class Inventory {
         Category category = new Category();
         Location location = new Location();
 
-        this.setId(UUID.fromString(resultSet.getString(1)));
+        this.setId(resultSet.getString(1));
         this.setItemName(resultSet.getString(2));
         this.setItemQuantity(resultSet.getInt(3));
-        category.setCategoryId(UUID.fromString(resultSet.getString(4)));
+        category.setCategoryId(resultSet.getString(4));
         category.setCategoryName(resultSet.getString(5));
-        location.setLocationId(UUID.fromString(resultSet.getString(6)));
+        location.setLocationId(resultSet.getString(6));
         location.setLocationName(resultSet.getString(7));
         this.setItemCategory(category);
         this.setItemLocation(location);
     }
 
-    public Inventory(UUID id, String itemName, int itemQuantity, Category itemCategory, Location itemLocation){
+    public Inventory(String id, String itemName, int itemQuantity, Category itemCategory, Location itemLocation){
         this.id = id;
         this.itemName = itemName;
         this.itemQuantity = itemQuantity;
@@ -55,20 +54,11 @@ public class Inventory {
         this.itemLocation = new Location(inventory.itemLocation);
     }
 
-    public boolean equals(Inventory inventory){
-//        if(this.id == inventory.getId())
-            if (this.itemName == inventory.getItemName())
-                if (this.itemQuantity == inventory.getItemQuantity())
-                    if (this.itemCategory.equals(inventory.itemCategory))
-                        return this.itemLocation.equals(inventory.itemLocation);
-        return false;
-    }
-
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

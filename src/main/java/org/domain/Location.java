@@ -2,11 +2,9 @@ package org.domain;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.UUID;
-
 public class Location {
     @SerializedName("location_id")
-    private UUID locationId;
+    private String locationId;
     @SerializedName("location_name")
     private String locationName;
 
@@ -14,7 +12,7 @@ public class Location {
 
     public Location(){}
 
-    public Location(UUID locId, String locName){
+    public Location(String locId, String locName){
         this.locationId = locId;
         this.locationName = locName;
     }
@@ -28,15 +26,11 @@ public class Location {
         this.locationName = location.getLocationName();
     }
 
-    public boolean equals(Location location){
-        return this.locationName == location.getLocationName();
-    }
-
-    public UUID getLocationId() {
+    public String getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(UUID locationId) {
+    public void setLocationId(String locationId) {
         this.locationId = locationId;
     }
 

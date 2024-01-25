@@ -1,11 +1,10 @@
 package org.domain;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.UUID;
 
 public class Category {
     @SerializedName("category_id")
-    private UUID categoryId;
+    private String categoryId;
     @SerializedName("category_name")
     private String categoryName;
 
@@ -13,7 +12,7 @@ public class Category {
 
     public Category(){}
 
-    public Category(UUID catId, String catName){
+    public Category(String catId, String catName){
         this.categoryId = catId;
         this.categoryName = catName;
     }
@@ -27,15 +26,11 @@ public class Category {
         this.categoryName = category.getCategoryName();
     }
 
-    public boolean equals(Category category){
-        return this.categoryName == category.getCategoryName();
-    }
-
-    public UUID getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(UUID categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

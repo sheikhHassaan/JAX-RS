@@ -1,23 +1,20 @@
 package org.common;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
+import java.util.Base64;
+import javax.ws.rs.ext.Provider;
+import javax.ws.rs.core.Response;
 import java.util.StringTokenizer;
+import static org.common.EnvironmentVariables.*;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ContainerRequestContext;
 
 @Provider
 public class SecurityFilter implements ContainerRequestFilter {
-    public static final String AUTHORIZATION_HEADER_KEY = "Authorization";
-    public static final String AUTHORIZATION_VALUE_PREFIX = "Basic ";
-
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
-        if ((authHeader != null) && (authHeader.size() > 0)) {
+        if ((authHeader != null) && (!authHeader.isEmpty())) {  // !authHeader.isEmpty()authHeader.size() > 0
             String authToken = authHeader.get(0).replace(AUTHORIZATION_VALUE_PREFIX, "");
 
             byte[] bytes = Base64.getDecoder().decode(authToken);
@@ -28,7 +25,7 @@ public class SecurityFilter implements ContainerRequestFilter {
             String username = stringTokenizer.nextToken();
             String passphrase = stringTokenizer.nextToken();
 
-            if ("user".equals(username) && "password".equals(passphrase)) {
+            if (USERNAME.equals(username) && PASSWORD.equals(passphrase)) { //
                 return;
             }
         }

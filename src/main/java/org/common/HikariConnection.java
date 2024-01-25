@@ -1,37 +1,42 @@
 package org.common;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import static org.common.EnvironmentVariables.*;
 
 public class HikariConnection {
     private static HikariDataSource dataSource;
     public static Connection connection;
-    private static final Object LOCK = new Object();
 
     private HikariConnection(){}
 
-    public static Connection getPooledConnection() throws SQLException, ConnectionNotFoundException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+    public static void initializeDataSource(){
 
-        synchronized (LOCK){
+        synchronized (HikariConnection.class){
+
             if (HikariConnection.dataSource == null) {
                 HikariConfig config = new HikariConfig();
-                config.setJdbcUrl(System.getenv("DB_URL"));
-                config.setUsername(System.getenv("DB_USER"));
-                config.setPassword(System.getenv("DB_PASSWORD"));
+                config.setJdbcUrl(DB_URL);
+                config.setUsername(DB_USER);
+                config.setPassword(DB_PASSWORD);
                 config.setMaximumPoolSize(25);
 
                 HikariConnection.dataSource = new HikariDataSource(config);
             }
         }
+    }
+    public static Connection getConnection() throws SQLException, ConnectionNotFoundException, ClassNotFoundException {
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        HikariConnection.initializeDataSource();
 
         connection = dataSource.getConnection();
 
-        if (connection == null) {
-            throw new ConnectionNotFoundException();
-        }
+        if (connection == null) { throw new ConnectionNotFoundException(); }
+
         return connection;
     }
 }
