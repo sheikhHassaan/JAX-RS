@@ -92,7 +92,7 @@ class InventoryServiceImplTest {
 
     @Test
     void updateInventory() throws ConnectionNotFoundException, SQLException, ClassNotFoundException, ObjectNotFoundException {
-        assertNotNull(service.updateInventory(new Inventory("b43ef010-8331-4f0e-a59b-4f72946432b9", "TestProduct", 11, new Category("3dac5d7b-2247-49b8-a80e-15c8a80830e1", "Phone"), new Location("5aeadcb0-97cb-4db4-8173-bf7fe2bf89cc", "Lahore")))
+        assertNotNull(service.updateInventory(new Inventory("ae747124-4b3f-45ec-997a-6b0038b00649", "Macbook Pro", 115, new Category("3dac5d7b-2247-49b8-a80e-15c8a80830e1", "Phone"), new Location("5aeadcb0-97cb-4db4-8173-bf7fe2bf89cc", "Lahore")))
                 , "The function updateInventory() returned null.");
     }
 
