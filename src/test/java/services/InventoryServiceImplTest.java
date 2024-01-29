@@ -1,14 +1,13 @@
 package services;
 
+import java.util.UUID;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.UUID;
 import java.sql.Connection;
-
-import com.google.gson.Gson;
 import org.domain.Location;
 import org.domain.Category;
+import com.google.gson.Gson;
 import org.domain.Inventory;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 class InventoryServiceImplTest {
-
     InventoryServiceImpl service;
     Connection connection;
 

@@ -17,6 +17,7 @@ public class HikariConnection {
         synchronized (HikariConnection.class){
 
             if (HikariConnection.dataSource == null) {
+
                 HikariConfig config = new HikariConfig();
                 config.setJdbcUrl(DB_URL);
                 config.setUsername(DB_USER);
