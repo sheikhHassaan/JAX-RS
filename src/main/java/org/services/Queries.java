@@ -44,6 +44,13 @@ public class Queries {
             "ON INVENTORY.INVENTORY.ITEM_LOCATION_ID = INVENTORY.ITEM_LOCATION.ID " +
             "WHERE INVENTORY.ITEM_LOCATION_ID = ? AND INVENTORY.ITEM_CATEGORY_ID = ?;";
 
+    public static final String INSERT_INTO_CATEGORY_LOCATIONS =
+            "INSERT IGNORE INTO inventory.category_locations (category_id, location_id) " +
+            "SELECT ? AS category_id, ? AS location_id FROM DUAL " +
+            "WHERE NOT EXISTS ( " +
+            "    SELECT 1 FROM inventory.category_locations " +
+            "    WHERE category_id = ? AND location_id = ? );";
+
     public static final String INSERT_CATEGORY =
             "INSERT INTO INVENTORY.ITEM_CATEGORY (ID, CATEGORY_NAME) VALUES (?, ?);";
 

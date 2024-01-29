@@ -17,6 +17,7 @@ public interface InventoryService {
     boolean isInventoryExist(String inventoryId) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Category getCategory(String catName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Location getLocation(String locName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
+    boolean addCategoryLocations(String catId, String locId, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Category addCategory(String catName, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Category saveCategory(String catName) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;
     Location addLocation(String locName, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException;

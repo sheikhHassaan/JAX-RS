@@ -108,6 +108,19 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
+
+    @Override
+    public boolean addCategoryLocations(String catId, String locId, Connection connection) throws SQLException, ClassNotFoundException, ConnectionNotFoundException {
+
+        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INTO_CATEGORY_LOCATIONS);
+        preparedStatement.setString(1, catId);
+        preparedStatement.setString(2, locId);
+        preparedStatement.setString(3, catId);
+        preparedStatement.setString(4, locId);
+
+        return preparedStatement.executeUpdate() > 0;
+    }
+
     @Override
     public Category addCategory(String catName, Connection connection) throws SQLException {
         Category category = new Category();
@@ -321,6 +334,9 @@ public class InventoryServiceImpl implements InventoryService{
             } else {
                 inventory.setItemLocation(getLocation(inv.getItemLocation().getLocationName()));
             }
+
+            addCategoryLocations(inventory.getItemCategory().getCategoryId(), inventory.getItemLocation().getLocationId(), connection);
+
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_INVENTORY);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, inv.getItemName());
@@ -340,6 +356,8 @@ public class InventoryServiceImpl implements InventoryService{
             }
         }
     }
+
+
 
 
     @Override
@@ -396,6 +414,7 @@ public class InventoryServiceImpl implements InventoryService{
             preparedStatement.setString(1, inventoryId);
             int rowsEffected = preparedStatement.executeUpdate();
             return rowsEffected > 0;
+
         } finally {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
